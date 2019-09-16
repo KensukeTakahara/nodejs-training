@@ -30,13 +30,21 @@ const getFromClient = (req, res) => {
   }
 };
 
+const data = {
+  Taro: "09-999-999",
+  Hanako: "080-888-888",
+  Sachiko: "070-777-777",
+  Ichiro: "060-666-666"
+};
+
 const responseIndex = (request, response) => {
-  let content = "これはテンプレートを使ったサンプルページです。";
-  const data = ejs.render(index_page, {
+  let msg = "これはテンプレートを使ったサンプルページです。";
+  const content = ejs.render(index_page, {
     title: "Index",
-    content
+    content: msg,
+    data
   });
-  writeToResponse(response, data, "text/html");
+  writeToResponse(response, content, "text/html");
 };
 
 const responseOther = (request, response) => {
