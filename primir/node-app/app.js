@@ -30,22 +30,31 @@ const getFromClient = (req, res) => {
   }
 };
 
-const data = {
-  Taro: "09-999-999",
-  Hanako: "080-888-888",
-  Sachiko: "070-777-777",
-  Ichiro: "060-666-666"
-};
+let dataStore = { msg: "no message..." };
 
 const responseIndex = (request, response) => {
-  let msg = "これはテンプレートを使ったサンプルページです。";
-  const content = ejs.render(index_page, {
+  if (request.method == "POST") {
+    let body = "";
+    request.on("data", data => {
+      body += data;
+    });
+    request.on("end", () => {
+      dataStore = qs.parse(body);
+      writeIndex(request, response);
+    });
+  } else {
+    writeIndex(request, response);
+  }
+};
+
+const writeIndex = (request, response) => {
+  let msg = "※伝言を表示します。";
+  const data = ejs.render(index_page, {
     title: "Index",
     content: msg,
-    data,
-    filename: "data_item"
+    data: dataStore
   });
-  writeToResponse(response, content, "text/html");
+  writeToResponse(response, data, "text/html");
 };
 
 const data2 = {
