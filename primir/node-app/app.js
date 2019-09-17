@@ -42,7 +42,8 @@ const responseIndex = (request, response) => {
   const content = ejs.render(index_page, {
     title: "Index",
     content: msg,
-    data
+    data,
+    filename: "data_item"
   });
   writeToResponse(response, content, "text/html");
 };
