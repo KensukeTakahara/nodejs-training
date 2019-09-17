@@ -48,6 +48,13 @@ const responseIndex = (request, response) => {
   writeToResponse(response, content, "text/html");
 };
 
+const data2 = {
+  Taro: ["taro@yamada", "09-999-999", "Tokyo"],
+  Hanako: ["hanako@flower", "080-888-888", "Yokohama"],
+  Sachiko: ["sachi@happy", "070-777-777", "Nagoya"],
+  Ichiro: ["ichi@baseball", "060-666-666", "USA"]
+};
+
 const responseOther = (request, response) => {
   let msg = "これはOtherページです。";
   if (request.method == "POST") {
@@ -60,7 +67,9 @@ const responseOther = (request, response) => {
       msg += "あなたは、「" + post_data.msg + "」と書きました。";
       const data = ejs.render(other_page, {
         title: "Other",
-        content: msg
+        content: msg,
+        data: data2,
+        filename: "data_item"
       });
       writeToResponse(response, data, "text/html");
     });
