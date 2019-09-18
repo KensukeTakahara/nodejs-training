@@ -30,6 +30,18 @@ const getFromClient = (req, res) => {
   }
 };
 
+const setCookie = (key, value, response) => {
+  const cookie = escape(value);
+  response.setHeader("Set-Cookie", [key + "=" + cookie]);
+};
+
+const getCookie = (key, request) => {
+  const cookieData = request.headers.cookie || "";
+  const data = cookieData.split(";");
+  const result = data.filter(val => val.trim().startsWith(key + "="));
+  return result ? unescape(result[0].trim().substring(key.length + 1)) : "";
+};
+
 let dataStore = { msg: "no message..." };
 
 const responseIndex = (request, response) => {
@@ -40,6 +52,7 @@ const responseIndex = (request, response) => {
     });
     request.on("end", () => {
       dataStore = qs.parse(body);
+      setCookie("msg", dataStore.msg, response);
       writeIndex(request, response);
     });
   } else {
@@ -49,10 +62,12 @@ const responseIndex = (request, response) => {
 
 const writeIndex = (request, response) => {
   let msg = "※伝言を表示します。";
+  const cookieData = getCookie("msg", request);
   const data = ejs.render(index_page, {
     title: "Index",
     content: msg,
-    data: dataStore
+    data: dataStore,
+    cookie_data: cookieData
   });
   writeToResponse(response, data, "text/html");
 };
