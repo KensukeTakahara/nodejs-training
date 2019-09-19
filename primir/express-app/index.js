@@ -2,26 +2,25 @@ const express = require("express");
 const ejs = require("ejs");
 
 const app = express();
-
 app.engine("ejs", ejs.renderFile);
-
 app.use(express.static("public"));
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get("/", (req, res) => {
-  const msg = "This is Express Page!<br />これは、トップページです。";
+  const msg = "This is Index Page!<br />※メッセージを書いて送信してください。";
   res.render("index.ejs", {
     title: "Index",
-    content: msg,
-    link: { href: "/other", text: "※別のページに移動" }
+    content: msg
   });
 });
 
-app.get("/other", (req, res) => {
-  const msg = "This is Other Page!<br />これは、用意された別のページです。";
+app.post("/", (req, res) => {
+  const msg = `This is Posted Page!<br />あなたは「${req.body.message}」と送信しました。`;
   res.render("index.ejs", {
-    title: "other",
-    content: msg,
-    link: { href: "/", text: "※トップに戻る" }
+    title: "Posted",
+    content: msg
   });
 });
 
