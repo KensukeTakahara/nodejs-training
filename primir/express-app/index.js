@@ -8,11 +8,20 @@ app.engine("ejs", ejs.renderFile);
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  const msg =
-    "This is Express Page!<br />これは、スタイルシートを利用した例です。";
+  const msg = "This is Express Page!<br />これは、トップページです。";
   res.render("index.ejs", {
     title: "Index",
-    content: msg
+    content: msg,
+    link: { href: "/other", text: "※別のページに移動" }
+  });
+});
+
+app.get("/other", (req, res) => {
+  const msg = "This is Other Page!<br />これは、用意された別のページです。";
+  res.render("index.ejs", {
+    title: "other",
+    content: msg,
+    link: { href: "/", text: "※トップに戻る" }
   });
 });
 
