@@ -1,9 +1,0 @@
-{
-  "name": "mini_board",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "ejs": "^2.7.1"
-  }
-}
