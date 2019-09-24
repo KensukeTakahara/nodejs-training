@@ -1,0 +1,9 @@
+{
+  "name": "recipe_connection",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "cities": "^2.0.0"
+  }
+}
