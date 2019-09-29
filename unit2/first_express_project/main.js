@@ -1,17 +1,23 @@
 const port = 3000,
   express = require("express"),
-  app = express();
+  app = express(),
+  homeController = require("./controllers/homeController");
 
-app
-  .get("/", (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
-    console.log(req.url);
-    console.log(req.query);
-    res.send("Hello, Universe");
-  })
-  .listen(port, () => {
-    console.log(
-      `The Express.js server has started and is listening on port number:${port}`
-    );
-  });
+app.use(homeController.logRequestPaths);
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.get("/", homeController.getParams);
+
+app.post("/", homeController.postParams);
+
+app.get("/items/:vegetable", homeController.sendReqParam);
+
+app.get("/sign_up", homeController.userSignUpProcessor);
+
+app.listen(port, () => {
+  console.log(
+    `The Express.js server has started and is listening on port number:${port}`
+  );
+});
