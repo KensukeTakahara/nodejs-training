@@ -1,0 +1,9 @@
+{
+  "name": "practice_mongoose",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.7.3"
+  }
+}
