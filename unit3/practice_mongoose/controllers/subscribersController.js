@@ -1,11 +1,18 @@
 const Subscriber = require("../models/subscriber");
 
 exports.getAllSubscriber = (req, res, next) => {
-  Subscriber.find({}, (error, subscribers) => {
-    if (error) next(error);
-    res.render("subscribers", { subscribers });
-    next();
-  });
+  Subscriber.find({})
+    .exec()
+    .then(subscribers => {
+      res.render("subscribers", { subscribers });
+    })
+    .catch(error => {
+      console.log(error.message);
+      return [];
+    })
+    .then(() => {
+      console.log("Promise Complete.");
+    });
 };
 
 exports.getSubscriptionPage = (req, res) => {
@@ -18,8 +25,12 @@ exports.saveSubscriber = (req, res) => {
     email: req.body.email,
     zipCode: req.body.zipCode
   });
-  newSubscriber.save((error, result) => {
-    if (error) res.send(error);
-    res.render("thanks");
-  });
+  newSubscriber
+    .save()
+    .then(result => {
+      res.render("tanks");
+    })
+    .catch(error => {
+      if (error) res.send(error);
+    });
 };

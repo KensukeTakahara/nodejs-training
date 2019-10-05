@@ -5,6 +5,8 @@ const mongoose = require("mongoose"),
   express = require("express"),
   app = express();
 
+mongoose.Promise = global.Promise;
+
 app.set("view engine", "ejs");
 
 app.use(
