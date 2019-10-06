@@ -1,0 +1,11 @@
+{
+  "name": "confetti_cuisine",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.3"
+  }
+}
