@@ -38,4 +38,8 @@ userSchema.virtual("fullName").get(function() {
   return `${this.name.first} ${this.name.last}`;
 });
 
+userSchema.virtual("nameLength").get(function() {
+  return this.name.first.length + this.name.last.length;
+});
+
 module.exports = mongoose.model("User", userSchema);
