@@ -2,6 +2,7 @@ const mongoose = require("mongoose"),
   port = 3000,
   express = require("express"),
   app = express(),
+  router = express.Router(),
   usersController = require("./controllers/usersController");
 
 mongoose.Promise = global.Promise;
@@ -17,8 +18,15 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/", router);
 
-app.get("/users", usersController.index, usersController.indexView);
+router.get("/users", usersController.index, usersController.indexView);
+router.get("/users/new", usersController.new);
+router.post(
+  "/users/create",
+  usersController.create,
+  usersController.redirectView
+);
 
 app.listen(port, () => {
   console.log(`Server running on port:${app.get("port")}`);
