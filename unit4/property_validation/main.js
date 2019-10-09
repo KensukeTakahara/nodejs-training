@@ -3,7 +3,8 @@ const mongoose = require("mongoose"),
   express = require("express"),
   app = express(),
   router = express.Router(),
-  usersController = require("./controllers/usersController");
+  usersController = require("./controllers/usersController"),
+  subscriberController = require("./controllers/subscribersController");
 
 mongoose.Promise = global.Promise;
 
@@ -26,6 +27,12 @@ router.post(
   "/users/create",
   usersController.create,
   usersController.redirectView
+);
+router.get("/users/:id", usersController.show, usersController.showView);
+router.get(
+  "/subscribers/:id",
+  subscriberController.show,
+  subscriberController.showView
 );
 
 app.listen(port, () => {
