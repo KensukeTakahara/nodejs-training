@@ -3,6 +3,7 @@ const mongoose = require("mongoose"),
   express = require("express"),
   app = express(),
   router = express.Router(),
+  methodOverride = require("method-override"),
   usersController = require("./controllers/usersController"),
   subscriberController = require("./controllers/subscribersController");
 
@@ -21,6 +22,12 @@ app.use(
 app.use(express.json());
 app.use("/", router);
 
+router.use(
+  methodOverride("_method", {
+    methods: ["POST", "GET"]
+  })
+);
+
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post(
@@ -33,6 +40,17 @@ router.get(
   "/subscribers/:id",
   subscriberController.show,
   subscriberController.showView
+);
+router.get("/users/:id/edit", usersController.edit);
+router.put(
+  "/users/:id/update",
+  usersController.update,
+  usersController.redirectView
+);
+router.delete(
+  "/users/:id/delete",
+  usersController.delete,
+  usersController.redirectView
 );
 
 app.listen(port, () => {
