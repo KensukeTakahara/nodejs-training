@@ -1,0 +1,39 @@
+<div>
+  <form action="<%=`/courses/${course._id}/update?_method=PUT`%>" method="POST">
+    <h2>Edit a course:</h2>
+    <label for="inputTitle">Title</label>
+    <input
+      type="text"
+      name="title"
+      id="inputTitle"
+      placeholder="<%=`${course.title}`%>"
+      required
+      autofocus
+    />
+    <label for="inputDescription">Description</label>
+    <input
+      type="text"
+      name="description"
+      id="inputDescription"
+      placeholder="<%=`${course.description}`%>"
+      required
+    />
+    <label for="inputMaxStudents">Max Students</label>
+    <input
+      type="text"
+      name="maxStudents"
+      id="inputMaxStudents"
+      placeholder="<%=`${course.maxStudents}`%>"
+      required
+    />
+    <label for="inputCost">Cost</label>
+    <input
+      type="text"
+      name="cost"
+      id="inputCost"
+      placeholder="<%=`${course.cost}`%>"
+      required
+    />
+    <button type="submit">Edit</button>
+  </form>
+</div>

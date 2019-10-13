@@ -1,0 +1,16 @@
+<header>
+  <h1>Header</h1>
+  <div>
+    <% if (flashMessages) { %> <% if (flashMessages.success) { %>
+    <div><%= flashMessages.success %></div>
+    <% } else if (flashMessages.error) { %>
+    <p><%= flashMessages.error %></p>
+    <% } %> <% } %>
+  </div>
+</header>
+<body>
+  <%- body %>
+</body>
+<footer>
+  <p>footer</p>
+</footer>

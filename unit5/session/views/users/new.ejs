@@ -1,0 +1,46 @@
+<div>
+  <form action="/users/create" method="POST">
+    <h2>Create a new user:</h2>
+    <label for="inputFirstName">First Name</label>
+    <input
+      type="text"
+      name="firstName"
+      id="inputFirstName"
+      placeholder="First Name"
+      autofocus
+    />
+    <label for="inputLastName">Last Name</label>
+    <input
+      type="text"
+      name="lastName"
+      id="inputLastName"
+      placeholder="Last Name"
+    />
+    <label for="inputEmail">Email Address</label>
+    <input
+      type="email"
+      name="email"
+      id="inputEmail"
+      placeholder="Email Address"
+      required
+    />
+    <label for="inputZipCode">Zip Code</label>
+    <input
+      type="text"
+      name="zipCode"
+      id="inputZipCode"
+      placeholder="ZipCode"
+      pattern="[0-9]{5}"
+      required
+    />
+    <label for="inputPassword">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="inputPassword"
+      placeholder="Password"
+      required
+    />
+    <button type="submit">Create</button>
+  </form>
+</div>
