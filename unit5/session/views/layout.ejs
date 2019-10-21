@@ -1,5 +1,10 @@
 <header>
   <h1>Header</h1>
+  <% if (loggedIn) { %> Logged in as
+  <a href="<%=`/users/${currentUser._id}`%>"><%= currentUser.fullName %> </a>
+  <% } else { %>
+  <a href="/users/login">Log in</a>
+  <% } %>
   <div>
     <% if (flashMessages) { %> <% if (flashMessages.success) { %>
     <div><%= flashMessages.success %></div>

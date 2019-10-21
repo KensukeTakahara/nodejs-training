@@ -8,16 +8,22 @@ const mongoose = require("mongoose"),
   expressSession = require("express-session"),
   cookieParser = require("cookie-parser"),
   connectFlash = require("connect-flash"),
+  passport = require("passport"),
   courseController = require("./controllers/courseController"),
   subscriberController = require("./controllers/subscribersController"),
   userController = require("./controllers/userController"),
-  errorController = require("./controllers/errorController");
+  errorController = require("./controllers/errorController"),
+  User = require("./models/user");
 
 mongoose.Promise = global.Promise;
 
 mongoose.connect("mongodb://localhost:27017/confetti_cuisine", {
   useNewUrlParser: true
 });
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.set("port", port);
 app.set("view engine", "ejs");
@@ -42,10 +48,13 @@ router.use(
     saveUninitialized: false
   })
 );
+router.use(passport.initialize());
+router.use(passport.session());
 router.use(connectFlash());
-
 router.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
+  res.locals.loggedIn = req.isAuthenticated();
+  res.locals.currentUser = req.user;
   next();
 });
 
@@ -106,11 +115,8 @@ router.post(
   userController.redirectView
 );
 router.get("/users/login", userController.login);
-router.post(
-  "/users/login",
-  userController.authenticate,
-  userController.redirectView
-);
+router.post("/users/login", userController.authenticate);
+router.get("/users/logout", userController.logout, userController.redirectView);
 router.get("/users/:id", userController.show, userController.showView);
 router.get("/users/:id/edit", userController.edit);
 router.put(
