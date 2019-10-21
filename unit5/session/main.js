@@ -101,7 +101,14 @@ router.get("/users", userController.index, userController.indexView);
 router.get("/users/new", userController.new);
 router.post(
   "/users/create",
+  userController.validate,
   userController.create,
+  userController.redirectView
+);
+router.get("/users/login", userController.login);
+router.post(
+  "/users/login",
+  userController.authenticate,
   userController.redirectView
 );
 router.get("/users/:id", userController.show, userController.showView);

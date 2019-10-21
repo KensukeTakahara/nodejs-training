@@ -1,4 +1,5 @@
 const User = require("../models/user"),
+  { check, validationResult, sanitizeBody } = require("express-validator"),
   getUserParams = body => {
     return {
       name: {
@@ -30,6 +31,14 @@ module.exports = {
     res.render("users/new");
   },
   create: (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      let messages = errors.array().map(e => e.msg);
+      req.flash("error", messages.join(" and "));
+      res.locals.redirect = "/users/new";
+      next();
+      return;
+    }
     let userParams = getUserParams(req.body);
     User.create(userParams)
       .then(user => {
@@ -111,5 +120,62 @@ module.exports = {
         console.log(`Error deleting user by ID:${error.message}`);
         next();
       });
-  }
+  },
+  login: (req, res) => {
+    res.render("users/login");
+  },
+  authenticate: (req, res, next) => {
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (user) {
+          user.passwordComparison(req.body.password).then(passwordMatch => {
+            if (passwordMatch) {
+              res.locals.redirect = `/users/${user._id}`;
+              req.flash(
+                "success",
+                `${user.fullName}'s logged in successfully.`
+              );
+              res.locals.user = user;
+            } else {
+              req.flash(
+                "error",
+                "Failed to log in user account:Incorrect Password."
+              );
+              res.locals.redirect = "/users/login";
+            }
+            next();
+          });
+        } else {
+          req.flash(
+            "error",
+            "Failed to log in user account:User account not found."
+          );
+          res.locals.redirect = "/users/login";
+          next();
+        }
+      })
+      .catch(error => {
+        console.log(`Error logging in user: ${error.message}`);
+        next(error);
+      });
+  },
+  validate: [
+    sanitizeBody("email")
+      .normalizeEmail({
+        all_lowercase: true
+      })
+      .trim(),
+    check("email", "Email is invalid").isEmail(),
+    check("zipCode", "Zip code is invalid")
+      .not()
+      .isEmpty()
+      .isInt()
+      .isLength({
+        min: 5,
+        max: 5
+      }),
+    check("password", "Password cannot by empty")
+      .not()
+      .isEmpty()
+  ]
 };
