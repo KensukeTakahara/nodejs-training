@@ -11,6 +11,12 @@
     <a href="/users/login" method="GET">Log in</a>
     <% } %>
   </div>
+  <li>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/recipeApp.js"></script>
+    <% include courses/_coursesModal %>
+  </li>
 </header>
 <div>
   <% if (flashMessages) { %> <% if (flashMessages.success) { %>
