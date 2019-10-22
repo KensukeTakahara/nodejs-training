@@ -1,0 +1,27 @@
+<header>
+  <h1>Header</h1>
+  <div>
+    <% if (loggedIn) { %>
+    <p>
+      Logged in as
+      <a href="<%=`/users/${currentUser._id}`%>"><%= currentUser.fullName %></a>
+    </p>
+    <p><a href="/users/logout">Log out</a></p>
+    <% } else { %>
+    <a href="/users/login" method="GET">Log in</a>
+    <% } %>
+  </div>
+</header>
+<div>
+  <% if (flashMessages) { %> <% if (flashMessages.success) { %>
+  <div><%= flashMessages.success %></div>
+  <% } else if (flashMessages.error) { %>
+  <div><%= flashMessages.error %></div>
+  <% } %> <% } %>
+</div>
+<body>
+  <%- body %>
+</body>
+<footer>
+  <p>footer</p>
+</footer>
