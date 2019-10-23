@@ -7,6 +7,7 @@
       <a href="<%=`/users/${currentUser._id}`%>"><%= currentUser.fullName %></a>
     </p>
     <p><a href="/users/logout">Log out</a></p>
+    <div id="apiToken" data-token="<%= currentUser.apiToken %>" style="display: none;" />
     <% } else { %>
     <a href="/users/login" method="GET">Log in</a>
     <% } %>

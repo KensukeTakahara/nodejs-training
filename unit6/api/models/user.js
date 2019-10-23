@@ -1,6 +1,7 @@
 const mongoose = require("mongoose"),
   { Schema } = mongoose,
   passportLocalMongoose = require("passport-local-mongoose"),
+  randToken = require("rand-token"),
   Subscriber = require("./subscriber"),
   userSchema = new Schema(
     {
@@ -24,6 +25,9 @@ const mongoose = require("mongoose"),
         min: [10000, "Zip code is too short"],
         max: 99999
       },
+      apiToken: {
+        type: String
+      },
       courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
       subscribedAccount: {
         type: Schema.Types.ObjectId,
@@ -37,6 +41,12 @@ const mongoose = require("mongoose"),
 
 userSchema.virtual("fullName").get(function() {
   return `${this.name.first} ${this.name.last}`;
+});
+
+userSchema.pre("save", function(next) {
+  let user = this;
+  if (!user.apiToken) user.apiToken = randToken.generate(16);
+  next();
 });
 
 userSchema.pre("save", function(next) {

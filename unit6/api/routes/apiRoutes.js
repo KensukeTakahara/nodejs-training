@@ -1,6 +1,9 @@
 const router = require("express").Router(),
-  courseController = require("../controllers/courseController");
+  courseController = require("../controllers/courseController"),
+  userController = require("../controllers/userController");
 
+router.post("/login", userController.apiAuthenticate);
+router.use(userController.verifyJWT);
 router.get(
   "/courses",
   courseController.index,
