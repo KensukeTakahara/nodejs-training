@@ -33,7 +33,7 @@ module.exports = {
   },
   create: (req, res, next) => {
     const errors = validationResult(req.body);
-    if (errors.not().isEmpty()) {
+    if (errors.length > 0) {
       let messages = errors.mapped(e => e.msg);
       req.flash("error", messages.join(" and "));
       res.locals.redirect = "/users/new";
