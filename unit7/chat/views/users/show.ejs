@@ -1,0 +1,22 @@
+<h1>User Data for <%= user.fullName %></h1>
+<table>
+  <tr>
+    <th>First Name</th>
+    <td><%= user.name.first %></td>
+  </tr>
+  <tr>
+    <th>Last Name</th>
+    <td><%= user.name.last %></td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td><%= user.email %></td>
+  </tr>
+  <tr>
+    <th>Zip Code</th>
+    <td><%= user.zipCode %></td>
+  </tr>
+  <p>
+    This user has <%= user.courses.length %> associated course(s)
+  </p>
+</table>

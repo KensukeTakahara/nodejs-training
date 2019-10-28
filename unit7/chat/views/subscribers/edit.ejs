@@ -1,0 +1,34 @@
+<div>
+  <form
+    action="<%=`/subscribers/${subscriber._id}/update?_method=PUT`%>"
+    method="POST"
+  >
+    <h2>Edit a subscriber:</h2>
+    <label for="inputName">Name</label>
+    <input
+      type="text"
+      name="name"
+      id="inputName"
+      placeholder="<%=`${subscriber.name}`%>"
+      autofocus
+    />
+    <label for="inputEmail">Email Address</label>
+    <input
+      type="email"
+      name="email"
+      id="inputEmail"
+      placeholder="<%=`${subscriber.email}`%>"
+      required
+    />
+    <label for="inputZipCode">Zip Code</label>
+    <input
+      type="text"
+      name="zipCode"
+      id="inputZipCode"
+      placeholder="<%=`${subscriber.zipCode}`%>"
+      pattern="[0-9]{5}"
+      required
+    />
+    <button type="submit">Edit</button>
+  </form>
+</div>
