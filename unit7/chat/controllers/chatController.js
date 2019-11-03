@@ -5,6 +5,7 @@ module.exports = io => {
     console.log("new connection");
     client.on("disconnect", () => {
       console.log("user disconnect");
+      client.broadcast.emit("user disconnected");
     });
     client.on("message", data => {
       let messageAttributes = {
